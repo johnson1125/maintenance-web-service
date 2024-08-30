@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/MaintenanceWebservice.iml" filepath="$PROJECT_DIR$/.idea/MaintenanceWebservice.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../PaymentWebservice/.idea/PaymentWebservice.iml" filepath="$PROJECT_DIR$/../PaymentWebservice/.idea/PaymentWebservice.iml" />
     </modules>
   </component>
 </project>
