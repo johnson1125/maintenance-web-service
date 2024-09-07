@@ -84,7 +84,7 @@ class MaintenanceRecord:
 
 
 @app.route('/api/maintenances', methods=['GET'])
-def get_maintenances():
+def get_maintenance():
     # Retrieve optional query parameters with defaults
     hallType = request.args.get('hallType', default=None)
     maintenanceID = request.args.get('maintenanceID', default=None)
@@ -146,6 +146,26 @@ def add_maintenance_record():
     cursor.close()
     conn.close()
     return jsonify({"message": "maintenance record added successfully!", "maintenanceID": id}), 201
+
+
+@app.route('/api/remove-maintenance-record', methods=['POST'])
+def remove_maintenance_record():
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    new_maintenance_record = request.json
+
+    maintenanceID = new_maintenance_record['maintenanceID']
+    startDateTime = new_maintenance_record['startDateTime']
+    hallID = new_maintenance_record['hallID']
+
+    cursor.execute(
+        "DELETE FROM maintenanceRecords WHERE maintenanceID = %s AND startTime = %s AND hallID = %s ;",
+    (maintenanceID, startDateTime, hallID))
+    conn.commit()
+
+    cursor.close()
+    conn.close()
+    return jsonify({"message": "maintenance record deleted successfully!", }), 201
 
 
 @app.route('/api/maintenance-records', methods=['GET'])
