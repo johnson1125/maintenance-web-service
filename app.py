@@ -176,8 +176,12 @@ def get_maintenance_records():
     conn = get_db_connection()
     cursor = conn.cursor(dictionary=True)
     if (hallID != None):
-        cursor.execute("SELECT * FROM maintenancerecords INNER JOIN maintenances maintenancerecords.maintenanceID = "
-                       "maintenances.maintenanceID ON WHERE hallID = %s", (hallID,))
+        cursor.execute("""
+            SELECT *
+            FROM maintenancerecords
+            INNER JOIN maintenances ON maintenancerecords.maintenanceID = maintenances.maintenanceID
+            WHERE hallID = %s
+        """, (hallID,))
     else:
         cursor.execute("SELECT * FROM maintenancerecords INNER JOIN maintenances on maintenancerecords.maintenanceID = "
                        "maintenances.maintenanceID")
