@@ -5,6 +5,7 @@ from datetime import datetime
 
 app = Flask(__name__)
 
+# Author: Ong Cheng Leong and Sia Yeong Sheng
 
 # Database connection function
 def get_db_connection():
