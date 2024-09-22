@@ -95,9 +95,9 @@ def get_maintenance():
     if (maintenanceID == None and hallType == None):
         cursor.execute("SELECT * FROM maintenances ")
     if (maintenanceID != None):
-        cursor.execute("SELECT * FROM maintenances WHERE maintenanceID = %s", (maintenanceID,))
+        cursor.execute("SELECT * FROM maintenances WHERE maintenanceID = %s", (str(maintenanceID),))
     if (hallType != None):
-        cursor.execute("SELECT *  FROM maintenances WHERE hallType = %s", (hallType,))
+        cursor.execute("SELECT *  FROM maintenances WHERE hallType = %s", (str(hallType),))
     maintenances_data = cursor.fetchall()
     cursor.close()
     conn.close()
@@ -131,18 +131,26 @@ def add_maintenance_record():
     cursor = conn.cursor()
     new_maintenance_record = request.json
 
-    starTime = new_maintenance_record['startTime']
+    startTime = new_maintenance_record['startTime']
     hallID = new_maintenance_record['hallID']
     maintenanceID = new_maintenance_record['maintenanceID']
-    provided_date = datetime.strptime(starTime, "%Y-%m-%d %H:%M:%S")
+    provided_date = datetime.strptime(startTime, "%Y-%m-%d %H:%M:%S")
     provided_date_str = provided_date.strftime("%y%m%d")
     id = get_next_id(provided_date_str)
 
     cursor.execute(
-        "INSERT INTO `maintenancerecords` (`maintenanceRecordID`, `startTime`, `hallID`, `maintenanceID`) VALUES (%s,"
-        "%s,%s,%s);",
-        (id, starTime, hallID, maintenanceID))
-    conn.commit()
+        """
+        INSERT INTO `maintenancerecords` 
+        (`maintenanceRecordID`, `startTime`, `hallID`, `maintenanceID`) 
+        VALUES (%s, %s, %s, %s);
+        """,
+        (
+            str(id),
+            str(startTime),
+            str(hallID),
+            str(maintenanceID)
+        )
+    )
 
     cursor.close()
     conn.close()
@@ -161,7 +169,7 @@ def remove_maintenance_record():
 
     cursor.execute(
         "DELETE FROM maintenanceRecords WHERE maintenanceID = %s AND startTime = %s AND hallID = %s ;",
-    (maintenanceID, startDateTime, hallID))
+    (str(maintenanceID), str(startDateTime), str(hallID)))
     conn.commit()
 
     cursor.close()
