@@ -16,14 +16,20 @@
 * Click Add Interpreter → Add Local Interpreter.  
 * Choose Virtualenv Environment  
 * Select Existing for Environment  
-* Choose the interpreter that the path is same with project folder 
+* Choose the interpreter that the path is same with project folder
 
-3. **Database Setup**  
+3. **Install Required Dependencies**  
+* In PyCharm’s terminal, navigate to the project directory.  
+* Run the following command to install dependencies:
+
+  pip install \-r requirements.txt
+
+4. **Database Setup**  
 * Open phpMyAdmin from XAMPP.  
 * Create a new database called **maintenance\_web\_service**.  
 * Import the maintenance\_web\_service.sql file (in git repository) into this database.
 
-4. **Running the Service**  
+5. **Running the Service**  
 * In PyCharm, click the Run button to run the app.py file (top right corner) to start the service.
 
 ### **Common Issues** 
